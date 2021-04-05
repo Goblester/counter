@@ -1,0 +1,38 @@
+
+.formField{
+    font-family: inherit;
+    border: 0;
+    border-bottom: 2px solid #9b9b9b;;
+    outline: 0;
+    font-size: 1rem;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+    color: #9b9b9b;
+}
+
+
+.errorField{
+    font-family: inherit;
+    border: 0;
+    border-bottom: 2px solid #ff0000;;
+    outline: 0;
+    font-size: 1rem;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+    color: red;
+}
+
+
+.errorField:focus{
+    color: red;
+    border-image: linear-gradient(to right, #b10d0d, #ff0000);
+    border-image-slice: 1;
+}
+
+
+.formField:focus {
+    border-image: linear-gradient(to right, #11998e, #38ef7d);
+    border-image-slice: 1;
+}
