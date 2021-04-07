@@ -1,8 +1,8 @@
+import styles from '../Counter/Counter.module.css';
 import SuperButton from '../SuperButton/SuperButton';
-import styles from './Counter.module.css';
-import buttonStyles from './../SuperButton/SuperButton.module.css'
+import buttonStyles from '../SuperButton/SuperButton.module.css';
 
-type CounterPropsType = {
+type CounterWithSettingsPropsType = {
     value: number,
     maxValue: number,
     startValue: number,
@@ -10,16 +10,26 @@ type CounterPropsType = {
     error: string | undefined,
     increaseValue: () => void,
     resetValue: () => void
-    changeEditorMode: ()=> void
+    changeEditorMode: (switcher: boolean) => void
 }
 
-export function Counter({value, maxValue, editorMode, error, startValue, ...restProps}: CounterPropsType) {
-
+export function CounterWithSettings({
+                                        value,
+                                        maxValue,
+                                        startValue,
+                                        editorMode,
+                                        error,
+                                        ...restProps
+                                    }: CounterWithSettingsPropsType) {
     const valueIsMax = value === maxValue;
     const valueIsZero = value === startValue;
     const valueClassName = `${styles.valueField} ${valueIsMax ? styles.maxValue : ''}`
     const increaseButtonClassName = `${editorMode || valueIsMax ? buttonStyles.disabled : buttonStyles.default}`
     const resetButtonClassName = `${editorMode || valueIsZero ? buttonStyles.disabled : buttonStyles.default}`
+    const setButtonClassName = `${buttonStyles.default}`
+    const onSetButtonClick = () => {
+        restProps.changeEditorMode(true);
+    }
     return (
         <div className={styles.container}>
             {!editorMode ?
@@ -28,11 +38,13 @@ export function Counter({value, maxValue, editorMode, error, startValue, ...rest
                 </div> :
                 <div
                     className={`${styles.messageField} ${error ? styles.error : ''}`}>{error ? 'incorrect value' : `enter values and press 'set'`}</div>}
-            <div className = {styles.buttons}>
+            <div className={styles.buttons}>
                 <SuperButton children={'inc'} onClick={restProps.increaseValue} disabled={editorMode || valueIsMax}
                              className={increaseButtonClassName}/>
                 <SuperButton children={'reset'} onClick={restProps.resetValue} disabled={editorMode || valueIsZero}
                              className={resetButtonClassName}/>
+                <SuperButton children={'set'} onClick={onSetButtonClick}
+                             className={setButtonClassName}/>
             </div>
         </div>
     )

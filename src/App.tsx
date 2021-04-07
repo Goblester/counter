@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import {Counter} from './components/Counter/Counter';
+import {CounterWithSettings} from './components/CounterWithSettings/CounterWithSettings';
 import {Settings} from './components/Settings/Settings';
 
 function App() {
@@ -60,7 +60,7 @@ function App() {
     return (
         <div className="App">
 
-            <Settings error={error}
+            {/*<Settings error={error}
                       editorMode={editorMode}
                       setNewStartValue={setNewStartValue}
                       setNewMaxValue={setNewMaxValue}
@@ -74,7 +74,23 @@ function App() {
                      error = {error}
                      increaseValue={increaseValue}
                      resetValue={resetValue}
-                     editorMode={editorMode}/>
+                     editorMode={editorMode}/>*/}
+            {editorMode?
+            <Settings error={error}
+                      editorMode={editorMode}
+                      setNewStartValue={setNewStartValue}
+                      setNewMaxValue={setNewMaxValue}
+                      changeEditorMode={changeEditorMode}
+                      setNewValue={setNewValue}
+                      changeError={changeError}/>:
+            <CounterWithSettings value={value}
+                                 maxValue={maxValue}
+                                 startValue={startValue}
+                                 error={error}
+                                 increaseValue={increaseValue}
+                                 resetValue={resetValue}
+                                 editorMode={editorMode}
+                                 changeEditorMode={changeEditorMode}/>}
         </div>
     );
 }
