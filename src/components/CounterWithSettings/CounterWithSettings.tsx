@@ -36,7 +36,7 @@ export function CounterWithSettings({
                 <div className={valueClassName}>
                     {value}
                 </div> :
-                <div
+                    <div
                     className={`${styles.messageField} ${error ? styles.error : ''}`}>{error ? 'incorrect value' : `enter values and press 'set'`}</div>}
             <div className={styles.buttons}>
                 <SuperButton children={'inc'} onClick={restProps.increaseValue} disabled={editorMode || valueIsMax}
