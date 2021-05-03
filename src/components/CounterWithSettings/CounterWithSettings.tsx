@@ -1,51 +1,47 @@
 import styles from '../Counter/Counter.module.css';
 import SuperButton from '../SuperButton/SuperButton';
 import buttonStyles from '../SuperButton/SuperButton.module.css';
+import React from 'react';
 
 type CounterWithSettingsPropsType = {
-    value: number,
+    currentValue: number,
     maxValue: number,
     startValue: number,
-    editorMode: boolean,
-    error: string | undefined,
     increaseValue: () => void,
-    resetValue: () => void
-    changeEditorMode: (switcher: boolean) => void
+    resetValue: () => void,
+    onEditorMode: () => void
 }
 
-export function CounterWithSettings({
-                                        value,
-                                        maxValue,
-                                        startValue,
-                                        editorMode,
-                                        error,
-                                        ...restProps
-                                    }: CounterWithSettingsPropsType) {
-    const valueIsMax = value === maxValue;
-    const valueIsZero = value === startValue;
-    const valueClassName = `${styles.valueField} ${valueIsMax ? styles.maxValue : ''}`
-    const increaseButtonClassName = `${editorMode || valueIsMax ? buttonStyles.disabled : buttonStyles.default}`
-    const resetButtonClassName = `${editorMode || valueIsZero ? buttonStyles.disabled : buttonStyles.default}`
-    const setButtonClassName = `${buttonStyles.default}`
-    const onSetButtonClick = () => {
-        restProps.changeEditorMode(true);
-    }
+export function CounterWithSettings(props: CounterWithSettingsPropsType) {
+    const {
+        currentValue,
+        maxValue,
+        startValue,
+        increaseValue,
+        resetValue,
+        onEditorMode
+    } = props;
+
+    const valueIsMax = currentValue === maxValue;
+    const valueIsZero = currentValue === startValue;
+    const valueClassName = `${styles.valueField} ${valueIsMax ? styles.maxValue : ''}`;
+    const increaseButtonClassName = `${valueIsMax ? buttonStyles.disabled : buttonStyles.default}`;
+    const resetButtonClassName = `${valueIsZero ? buttonStyles.disabled : buttonStyles.default}`;
+    const setButtonClassName = `${buttonStyles.default}`;
     return (
         <div className={styles.container}>
-            {!editorMode ?
-                <div className={valueClassName}>
-                    {value}
-                </div> :
-                    <div
-                    className={`${styles.messageField} ${error ? styles.error : ''}`}>{error ? 'incorrect value' : `enter values and press 'set'`}</div>}
+            <div className={valueClassName}>
+                {currentValue}
+            </div>
             <div className={styles.buttons}>
-                <SuperButton children={'inc'} onClick={restProps.increaseValue} disabled={editorMode || valueIsMax}
+                <SuperButton children={'inc'} onClick={increaseValue} disabled={valueIsMax}
                              className={increaseButtonClassName}/>
-                <SuperButton children={'reset'} onClick={restProps.resetValue} disabled={editorMode || valueIsZero}
+                <SuperButton children={'reset'} onClick={resetValue} disabled={valueIsZero}
                              className={resetButtonClassName}/>
-                <SuperButton children={'set'} onClick={onSetButtonClick}
+                <SuperButton children={'set'} onClick={onEditorMode}
                              className={setButtonClassName}/>
             </div>
         </div>
     )
 }
+

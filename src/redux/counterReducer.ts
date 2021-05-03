@@ -13,7 +13,7 @@ const initialState: CounterStateType = {
     maxValue: 5,
     currentValue: 0,
     editMode: false,
-    error: undefined
+    error: ''
 }
 
 
@@ -39,9 +39,8 @@ export const counterReducer = (state: CounterStateType = initialState, action: C
             return {
                 ...state,
                 ...action.payload,
-                editMode: false,
                 currentValue: action.payload.startValue,
-                error: undefined
+
             }
         case 'counter/SET_ERROR':
             return {

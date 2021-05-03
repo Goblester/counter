@@ -78,7 +78,7 @@ test('setLimitValues should work correct', () => {
         maxValue: 7,
         currentValue: 6,
         editMode: false,
-        error: undefined
+        error: 'sdasd'
     });
 });
 
