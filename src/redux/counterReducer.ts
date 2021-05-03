@@ -1,4 +1,6 @@
-type CounterStateType = {
+import {CounterActionsType} from './counterActions';
+
+export type CounterStateType = {
     startValue: number
     maxValue: number
     currentValue: number
@@ -15,6 +17,38 @@ const initialState: CounterStateType = {
 }
 
 
-export const counterReducer = (state:CounterStateType=initialState, action:any):CounterStateType => {
+export const counterReducer = (state: CounterStateType = initialState, action: CounterActionsType): CounterStateType => {
+    switch (action.type) {
+        case 'counter/INCREASE_CURRENT_VALUE':
+            return {
+                ...state,
+                currentValue: state.currentValue + 1,
+
+            }
+        case 'counter/NULLIFY_CURRENT_VALUE':
+            return {
+                ...state,
+                currentValue: state.startValue
+            }
+        case 'counter/CHANGE_EDIT_MODE':
+            return {
+                ...state,
+                ...action.payload
+            }
+        case 'counter/SET_LIMIT_VALUES':
+            return {
+                ...state,
+                ...action.payload,
+                editMode: false,
+                currentValue: action.payload.startValue,
+                error: undefined
+            }
+        case 'counter/SET_ERROR':
+            return {
+                ...state,
+                ...action.payload
+            }
+    }
     return state
+
 }
